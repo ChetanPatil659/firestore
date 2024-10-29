@@ -3,7 +3,24 @@ import { db } from './firebase'; // Your Firebase setup
 import { collection, doc, setDoc, onSnapshot } from 'firebase/firestore';
 
 function App() {
-  const allowedUsers = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15']; // List of users with unique boxes
+  const allowedUsers =  
+  [
+    'Pratibha',
+    'Amarjeet',
+    'Ayushi',
+    'Jyoti',
+    'Keziah',
+    'Yash',
+    'Rudranil',
+    'Gaurav',
+    'Sutithi',
+    'Harish',
+    'Kiran',
+    'Maheer',
+    'Margish',
+    'Preeti',
+    'Raviraj'
+  ];
   const [username, setUsername] = useState('');
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [showModal, setShowModal] = useState(true); // Control modal visibility
@@ -22,7 +39,6 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  console.log(clickedUsers)
 
   const handleSubmit = () => {
     if (allowedUsers.includes(username)) {
@@ -37,11 +53,9 @@ function App() {
 
   const handleClick = async () => {
     try {
-      console.log('first')
       if (username) {
         const userData = { clicked: clickedUsers[username] ? false : true };
         await setDoc(doc(db, 'users', username), userData);
-        console.log('sent')
       }
     } catch (error) {
       console.error('Error writing document:', error.message); // Log detailed error message
@@ -49,7 +63,7 @@ function App() {
   };
   
   return (
-    <div style={{height: '100vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
+    <div style={{height: '100vh', width: '100vw', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'black'}}>
       {showModal && (
         <div style={modalStyles.overlay}>
           <div style={modalStyles.modal}>
@@ -69,39 +83,17 @@ function App() {
         </div>
       )}
 
-      {/* <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-        {allowedUsers.map((user) => (
-          <div
-            key={user}
-            onClick={isAuthorized && user === username ? handleClick : null} // Clickable only for authorized user's own box
-            style={{
-              width: '50px',
-              height: '50px',
-              backgroundColor: clickedUsers[user] ? 'blue' : 'gray',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'white',
-              cursor: isAuthorized && user === username ? 'pointer' : 'not-allowed',
-              borderRadius: '5px',
-            }}
-          >
-            {user}
-          </div>
-        ))}
-      </div> */}
-
-      <div style={{ height: '70%', aspectRatio: '16/9', background: 'red', display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gridTemplateRows: 'repeat(3, 1fr)', gap: '3px', backgroundImage: 'url(https://res.cloudinary.com/dk-find-out/image/upload/q_80,w_1920,f_auto/A-Getty-135226346_mu216z.jpg)', }}>
+      <div style={{ height: '80%', width: '80%', borderRadius: '10px', background: 'red', display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gridTemplateRows: 'repeat(3, 1fr)', gap: '1.5px',   backgroundImage: 'url(https://th.bing.com/th/id/OIG4.f4RIurjqEnX4jFE6tvzH?w=1792&h=1024&rs=1&pid=ImgDetMain)', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover' }}>
             {allowedUsers.map((user, index) => (
                 <div 
                   key={index} 
-                  style={{ background: clickedUsers[user] ? 'transparent' : 'gray', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: isAuthorized && user == username ? 'pointer' : 'not-allowed',}}
+                  style={{ background: clickedUsers[user] ? 'transparent' : '#414770', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: isAuthorized && user == username ? 'pointer' : 'not-allowed', transition: 'background ease-in 0.6s, transform ease-in-out 0.6s', borderRadius: '5px' }}
                   onClick={isAuthorized && user == username ? handleClick : null}
                 >
-                  <h1 style={{ color: 'white' }}>
+                  <p style={{ color: 'white', fontFamily: 'Mr Bedfort', fontSize: '26px' }}>
 
                     {user}
-                  </h1>
+                  </p>
                 </div>
             ))}
         </div>
@@ -159,15 +151,11 @@ const modalStyles = {
 export default App;
 
 
-// import React from 'react'
-// import Rangoli from './Rangoli'
 
-// function App() {
-//   return (
-//     <div style={{height: '100vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
-//       <Rangoli/>
-//     </div>
-//   )
-// }
 
-// export default App
+
+
+
+
+
+
