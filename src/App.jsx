@@ -106,7 +106,6 @@ function App() {
             ))}
         </div>
 
-      {!isAuthorized && !showModal && <p>You are viewing as a guest. Boxes are not clickable.</p>}
     </div>
   );
 }
