@@ -34,10 +34,18 @@ function App() {
   };
 
   const handleClick = async () => {
-    if (username) {
-      await setDoc(doc(db, 'users', username), { clicked: clickedUsers[username] ? false : true });
+    try {
+      if (username) {
+        const userData = { clicked: true };
+        console.log(`Sending to Firestore for ${username}:`, userData); // Log the data
+        await setDoc(doc(db, 'users', username), userData);
+        console.log('Document successfully written!');
+      }
+    } catch (error) {
+      console.error('Error writing document:', error.message); // Log detailed error message
     }
   };
+  
 
   return (
     <div>
@@ -59,7 +67,7 @@ function App() {
           </div>
         </div>
       )}
-      
+
       <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
         {allowedUsers.map((user) => (
           <div
