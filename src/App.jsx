@@ -3,7 +3,7 @@ import { db } from './firebase'; // Your Firebase setup
 import { collection, doc, setDoc, onSnapshot } from 'firebase/firestore';
 
 function App() {
-  const allowedUsers = ['Alice', 'Bob', 'Charlie']; // List of users with unique boxes
+  const allowedUsers = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15']; // List of users with unique boxes
   const [username, setUsername] = useState('');
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [showModal, setShowModal] = useState(true); // Control modal visibility
@@ -22,6 +22,8 @@ function App() {
     return () => unsubscribe();
   }, []);
 
+  console.log(clickedUsers)
+
   const handleSubmit = () => {
     if (allowedUsers.includes(username)) {
       setIsAuthorized(true);
@@ -35,18 +37,19 @@ function App() {
 
   const handleClick = async () => {
     try {
+      console.log('first')
       if (username) {
         const userData = { clicked: clickedUsers[username] ? false : true };
         await setDoc(doc(db, 'users', username), userData);
+        console.log('sent')
       }
     } catch (error) {
       console.error('Error writing document:', error.message); // Log detailed error message
     }
   };
   
-
   return (
-    <div>
+    <div style={{height: '100vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
       {showModal && (
         <div style={modalStyles.overlay}>
           <div style={modalStyles.modal}>
@@ -66,7 +69,7 @@ function App() {
         </div>
       )}
 
-      <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+      {/* <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
         {allowedUsers.map((user) => (
           <div
             key={user}
@@ -86,7 +89,23 @@ function App() {
             {user}
           </div>
         ))}
-      </div>
+      </div> */}
+
+      <div style={{ height: '70%', aspectRatio: '16/9', background: 'red', display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gridTemplateRows: 'repeat(3, 1fr)', gap: '3px', backgroundImage: 'url(https://res.cloudinary.com/dk-find-out/image/upload/q_80,w_1920,f_auto/A-Getty-135226346_mu216z.jpg)', }}>
+            {allowedUsers.map((user, index) => (
+                <div 
+                  key={index} 
+                  style={{ background: clickedUsers[user] ? 'transparent' : 'gray', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: isAuthorized && user == username ? 'pointer' : 'not-allowed',}}
+                  onClick={isAuthorized && user == username ? handleClick : null}
+                >
+                  <h1 style={{ color: 'white' }}>
+
+                    {user}
+                  </h1>
+                </div>
+            ))}
+        </div>
+
       {!isAuthorized && !showModal && <p>You are viewing as a guest. Boxes are not clickable.</p>}
     </div>
   );
@@ -139,3 +158,17 @@ const modalStyles = {
 };
 
 export default App;
+
+
+// import React from 'react'
+// import Rangoli from './Rangoli'
+
+// function App() {
+//   return (
+//     <div style={{height: '100vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
+//       <Rangoli/>
+//     </div>
+//   )
+// }
+
+// export default App
