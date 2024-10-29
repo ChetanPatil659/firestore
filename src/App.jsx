@@ -36,10 +36,8 @@ function App() {
   const handleClick = async () => {
     try {
       if (username) {
-        const userData = { clicked: true };
-        console.log(`Sending to Firestore for ${username}:`, userData); // Log the data
+        const userData = { clicked: clickedUsers[username] ? false : true };
         await setDoc(doc(db, 'users', username), userData);
-        console.log('Document successfully written!');
       }
     } catch (error) {
       console.error('Error writing document:', error.message); // Log detailed error message
